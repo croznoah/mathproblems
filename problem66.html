@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>66 Problem</title>
+
+    <script src="https://kit.fontawesome.com/4616ff3f2d.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+        }
+        div {
+            font-family: "figtree", sans-serif;
+        }
+        .main {
+            padding: 30px;
+            width: fit-content;
+            margin: auto;
+            display: grid;
+            grid-gap: 30px;
+            grid-template-columns: auto auto;
+        }
+        .information {
+            background-color: hsl(0, 0%, 95%);
+            padding: 30px;
+        }
+        .howitworks {
+            grid-column: span 2;
+            background-color: hsl(0, 0%, 95%);
+            padding: 30px;
+            width: 100%;
+        }
+        .header {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .container {
+            display: grid;
+            position: relative;
+            row-gap: 30px;
+            width: fit-content;
+        }
+        .grid {
+            background-color: hsl(0, 0%, 95%);
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            width: fit-content;
+            height: fit-content;
+        }
+        .grid > div {
+            height: 60px;
+            width: 60px;
+        }
+        .box {
+            border: 2px solid black;
+            border-bottom: none;
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+            font-weight: 600;
+            background-color: white;
+        }
+        .fill {
+            background-color: yellow;
+        }
+        .buttonwrapper {
+            background-color: hsl(0, 0%, 95%);
+            padding: 30px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            width: 100%;
+            margin: auto;
+        }
+        .checkboxwrapper {
+            display: flex;
+            column-gap: 8px;
+            align-items: center;
+        }
+        .checkbox {
+            height: 22px;
+            width: 22px;
+            background-color: #333333;
+            border: 2px solid #333333;
+            color: white;
+            display: grid;
+            place-items: center;
+            border-radius: 3px;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.1s background-color ease;
+            font-size: 12px;
+        }
+        .checkbox[active="false"] {
+            background-color: white;
+            transition: 0.1s background-color ease;
+        }
+        .button {
+            height: 40px;
+            width: fit-content;
+            background-color: #333333;
+            color: white;
+            padding: 0px 40px;
+            font-weight: 600;
+            display: grid;
+            place-content: center;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+
+    <div class="main">
+        <div class="container">
+            <div class="grid">
+                <div class="box fill" id="fill1"></div>
+                <div></div>
+                <div class="box fill" id="fill6"></div>
+                <div class="box" style="box-shadow: 0px 1.5px black; border-left: none; border-right: none;">-</div>
+                <div class="box fill" id="fill3"></div>
+                <div></div>
+                <div class="box">66</div>
+
+                <div class="box">+</div>
+                <div></div>
+                <div class="box">×</div>
+                <div></div>
+                <div class="box">−</div>
+                <div></div>
+                <div class="box">=</div>
+
+                <div class="box">13</div>
+                <div></div>
+                <div class="box">12</div>
+                <div></div>
+                <div class="box">11</div>
+                <div></div>
+                <div class="box">10</div>
+
+                <div class="box">×</div>
+                <div></div>
+                <div class="box">+</div>
+                <div></div>
+                <div class="box">+</div>
+                <div></div>
+                <div class="box">−</div>
+
+                <div class="box fill" id="fill4"></div>
+                <div></div>
+                <div class="box fill" id="fill2"></div>
+                <div></div>
+                <div class="box fill" id="fill7"></div>
+                <div></div>
+                <div class="box fill" id="fill9"></div>
+
+                <div class="box" style="border-bottom: 2px solid black;">÷</div>
+                <div class="box fill" style="border-bottom: 2px solid black; border-left: none; border-right: none;" id="fill5"></div>
+                <div class="box" style="border-bottom: 2px solid black;">+</div>
+                <div></div>
+                <div class="box" style="border-bottom: 2px solid black;">×</div>
+                <div class="box fill" style="border-bottom: 2px solid black; border-left: none; border-right: none;" id="fill8"></div>
+                <div class="box" style="border-bottom: 2px solid black;">÷</div>
+            </div>
+
+            <div class="buttonwrapper">
+                <div class="checkboxwrapper">
+                    Whole Numbers
+                    <div class="checkbox" active="false" onclick="togglecheckbox(this)">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                </div>
+                <div></div>
+                <div class="button" onclick="solve()">Solve</div>
+            </div>
+        </div>
+        <div class="information">
+            <div class="header">Solution Details</div>
+            <div id="info"></div>
+        </div>
+        <details class="howitworks">
+            <summary class="header" style="cursor: pointer;">Source Code</summary>
+
+            <code>
+                <br>
+                function solve() {<br>
+                    &emsp;starttime = performance.now();<br>
+                    &emsp;solved = false;<br>
+                    &emsp;attempts = 0;<br>
+                    &emsp;while (solved == false) {<br>
+                        &emsp;&emsp;attempts++;<br>
+                        &emsp;&emsp;var x = [];<br>
+                        &emsp;&emsp;for (b = 0; b < 9; b++) {<br>
+                        &emsp;&emsp;&emsp;unique = false;<br>
+                        &emsp;&emsp;&emsp;while (unique == false) {<br>
+                        &emsp;&emsp;&emsp;&emsp;randomnnumber = Math.floor(Math.random() * 9) + 1;<br><br>
+    
+                        &emsp;&emsp;&emsp;&emsp;match = false;<br>
+                        &emsp;&emsp;&emsp;&emsp;x.forEach(item => {<br>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;if (item == randomnnumber) {<br>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;match = true;<br>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;}<br>
+                        &emsp;&emsp;&emsp;&emsp;});<br><br>
+
+                        &emsp;&emsp;&emsp;&emsp;if (match == false) {<br>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;unique = true;<br>
+                        &emsp;&emsp;&emsp;&emsp;&emsp;x.push(randomnnumber);<br>
+                        &emsp;&emsp;&emsp;&emsp;}<br>
+                        &emsp;&emsp;&emsp;}<br>
+                        &emsp;&emsp;&emsp;}<br><br>
+
+                        &emsp;&emsp;&emsp;var l = x[0] + x[1] - x[2] - 21;<br>
+                        &emsp;&emsp;&emsp;var m = (13 * x[3]) / x[4];<br>
+                        &emsp;&emsp;&emsp;var n = 12 * x[5];<br>
+                        &emsp;&emsp;&emsp;var o = (x[6] * x[7]) / x[8];<br><br>
+
+                        &emsp;&emsp;&emsp;var final = l + m + n + o;<br><br>
+
+                        &emsp;&emsp;&emsp;if (final == 66) {<br>
+                        &emsp;&emsp;&emsp;if (wholenumbers == true) {<br>
+                            &emsp;&emsp;&emsp;&emsp;if (m % 1 == 0 && o % 1 == 0) {<br>
+                                &emsp;&emsp;&emsp;&emsp;&emsp;finishsolving(x, attempts);<br>
+                                &emsp;&emsp;&emsp;&emsp;&emsp;solved = true;<br>
+                                &emsp;&emsp;&emsp;&emsp;}<br>
+                                &emsp;&emsp;&emsp;} else {<br>
+                                &emsp;&emsp;&emsp;&emsp;finishsolving(x, attempts);<br>
+                                &emsp;&emsp;&emsp;&emsp;solved = true;<br>
+                            &emsp;&emsp;&emsp;}<br>
+                        &emsp;&emsp;}<br>
+                    &emsp;}<br>
+                }<br><br><br>
+                function finishsolving(x, attempts) {<br>
+                    &emsp;for (c = 0; c < x.length; c++) {<br>
+                        &emsp;&emsp;document.getElementById("fill" + (c + 1)).innerText = x[c];<br>
+                    &emsp;}<br><br>
+        
+                    &emsp;document.querySelector("#info").innerHTML = `<br>
+                        &emsp;&emsp;&lt;br&gt;<br>
+                        &emsp;&emsp;&lt;b&gt;Attempt:&lt;/b&gt; &lt;i&gt;#${String(attempts).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}&lt;/i&gt;&lt;br&gt;<br>
+                        &emsp;&emsp;&lt;b&gt;Time:&lt;/b&gt; &lt;i&gt;${Math.round(performance.now() - starttime)} milliseconds&lt;/i&gt;&lt;br&gt;<br>
+                    &emsp;`;<br>
+                }<br><br><br>
+                solve();
+            </code>
+        </details>
+    </div>
+
+    <script>
+        wholenumbers = false;
+        function solve() {
+            starttime = performance.now();
+            solved = false;
+            attempts = 0;
+            while (solved == false) {
+                attempts++;
+                var x = [];
+                for (b = 0; b < 9; b++) {
+                    unique = false;
+                    while (unique == false) {
+                        randomnnumber = Math.floor(Math.random() * 9) + 1;
+
+                        match = false;
+                        x.forEach(item => {
+                            if (item == randomnnumber) {
+                                match = true;
+                            }
+                        });
+
+                        if (match == false) {
+                            unique = true;
+                            x.push(randomnnumber);
+                        }
+                    }
+                }
+
+                var l = x[0] + x[1] - x[2] - 21;
+                var m = (13 * x[3]) / x[4];
+                var n = 12 * x[5];
+                var o = (x[6] * x[7]) / x[8];
+                
+                var final = l + m + n + o;
+
+                if (final == 66) {
+                    if (wholenumbers == true) {
+                        if (m % 1 == 0 && o % 1 == 0) {
+                            finishsolving(x, attempts);
+                            solved = true;
+                        }
+                    } else {
+                        finishsolving(x, attempts);
+                        solved = true;
+                    }
+                }
+            }
+        }
+        function finishsolving(x, attempts) {
+            for (c = 0; c < x.length; c++) {
+                document.getElementById("fill" + (c + 1)).innerText = x[c];
+            }
+
+            document.querySelector("#info").innerHTML = `
+                <br>
+                <b>Attempt:</b> <i>#${String(attempts).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</i><br>
+                <b>Time:</b> <i>${Math.round(performance.now() - starttime)} milliseconds</i>
+            `;
+        }
+        function togglecheckbox(element) {
+            if (wholenumbers == false) {
+                wholenumbers = true;
+                element.setAttribute("active", "true");
+            } else {
+                wholenumbers = false;
+                element.setAttribute("active", "false");
+            }
+        }
+    </script>
+</body>
+</html>
